@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<!--
+    hotel_detail.html - Hotel Detail & Room Selection Page
+    ========================================================
+    Shows detailed hotel information and available room types.
+    Tourists can select a room and proceed to booking.
+    
+    Controller: HotelListController.showHotelDetail()
+    Model attributes:
+      - hotel: Hotel entity with full details
+      - rooms: List<Room> - available rooms for this hotel
+-->
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/layout :: head"></head>
+<body class="d-flex flex-column min-vh-100">
+<div th:replace="fragments/layout :: navbar"></div>
+
+<main class="flex-grow-1" style="padding-top: 80px;">
+    <div class="container py-4">
+        <!-- Back button -->
+        <a th:href="@{/hotels}" class="btn btn-outline-light mb-4 rounded-pill">
+            <i class="fas fa-arrow-left me-1"></i>Back to Hotels
+        </a>
+
+        <!-- Hotel header section -->
+        <div class="card glass-card mb-4">
+            <div class="card-body p-4">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h1 class="text-white fw-bold" th:text="${hotel.name}">Hotel Name</h1>
+                        <p class="fs-5 text-muted">
+                            <i class="fas fa-map-marker-alt me-1 text-primary"></i>
+                            <span th:text="${hotel.location}">Location</span>
+                            <span th:if="${hotel.address}" class="ms-2">
+                                — <span th:text="${hotel.address}">Address</span>
+                            </span>
+                        </p>
+                        <!-- Star rating display -->
+                        <div class="mb-3">
+                            <span th:each="i : ${#numbers.sequence(1, hotel.starRating)}">
+                                <i class="fas fa-star text-warning fa-lg"></i>
+                            </span>
+                            <span th:each="i : ${#numbers.sequence(hotel.starRating + 1, 5)}">
+                                <i class="far fa-star text-muted fa-lg"></i>
+                            </span>
+                            <span class="ms-2 text-muted" th:text="${hotel.starRating} + '-Star Hotel'">Rating</span>
+                        </div>
+                        <p class="text-light" th:text="${hotel.description}">Description</p>
+                    </div>
+                    <div class="col-md-4">
+                        <!-- Contact info card -->
+                        <div class="card bg-dark border-secondary">
+                            <div class="card-body">
+                                <h5 class="text-primary"><i class="fas fa-phone-alt me-2"></i>Contact</h5>
+                                <p class="text-light mb-1" th:if="${hotel.contactPhone}">
+                                    <i class="fas fa-phone me-2 text-muted"></i>
+                                    <span th:text="${hotel.contactPhone}">Phone</span>
+                                </p>
+                                <p class="text-light mb-0" th:if="${hotel.contactEmail}">
+                                    <i class="fas fa-envelope me-2 text-muted"></i>
+                                    <span th:text="${hotel.contactEmail}">Email</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Available rooms section -->
+        <h2 class="text-white mb-4"><i class="fas fa-bed me-2"></i>Available Rooms</h2>
+
+        <!-- No rooms message -->
+        <div th:if="${#lists.isEmpty(rooms)}" class="text-center py-5">
+            <i class="fas fa-bed fa-4x text-muted mb-3"></i>
+            <h4 class="text-white">No rooms available</h4>
+            <p class="text-muted">All rooms are currently booked. Please check back later.</p>
+        </div>
+
+        <!-- Room cards -->
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4" th:each="room : ${rooms}">
+                <div class="card glass-card h-100">
+                    <div class="card-body">
+                        <h4 class="text-primary" th:text="${room.roomType}">Room Type</h4>
+                        <p class="text-muted" th:text="${room.description}">Room description</p>
+
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <span class="text-warning fs-4 fw-bold">
+                                    $<span th:text="${#numbers.formatDecimal(room.pricePerNight, 1, 2)}">0.00</span>
+                                </span>
+                                <span class="text-muted">/night</span>
+                            </div>
+                            <span class="badge bg-success" th:text="'Available: ' + ${room.availableRooms}">
+                                Available: 0
+                            </span>
+                        </div>
+
+                        <div class="mb-3">
+                            <small class="text-muted">
+                                <i class="fas fa-users me-1"></i>Max Guests:
+                                <span th:text="${room.capacity}">2</span>
+                            </small>
+                        </div>
+
+                        <!-- Book Now button (requires authentication) -->
+                        <a th:href="@{/bookings/new(roomId=${room.id})}"
+                           class="btn btn-primary w-100 rounded-pill"
+                           sec:authorize="isAuthenticated()">
+                            <i class="fas fa-calendar-plus me-1"></i>Book Now
+                        </a>
+                        <!-- Login prompt for unauthenticated users -->
+                        <a th:href="@{/login}" class="btn btn-outline-primary w-100 rounded-pill"
+                           sec:authorize="isAnonymous()">
+                            <i class="fas fa-sign-in-alt me-1"></i>Login to Book
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div th:replace="fragments/layout :: footer"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
