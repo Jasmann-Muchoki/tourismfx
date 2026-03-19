@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<!--
+    registration.html - New Tourist Registration Page
+    ====================================================
+    Collects tourist details and creates a new account.
+    
+    Form fields:
+      - username, email, password, confirmPassword (required)
+      - fullName, nationality (required)
+      - phoneNumber (optional, for M-Pesa payments)
+    
+    Controller: RegistrationController
+    Model attributes:
+      - errorMessage:   validation or duplicate error
+      - successMessage: confirmation message
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: head"></head>
+<body class="auth-page d-flex align-items-center min-vh-100">
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <!-- Registration card -->
+            <div class="auth-card card shadow-lg">
+                <div class="card-body p-5">
+                    <!-- Logo and title -->
+                    <div class="text-center mb-4">
+                        <i class="fas fa-globe-americas fa-3x text-primary mb-3"></i>
+                        <h2 class="fw-bold text-white">Create Account</h2>
+                        <p class="text-muted">Join TourismFX to start booking amazing destinations</p>
+                    </div>
+
+                    <!-- Error/Success messages -->
+                    <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show">
+                        <i class="fas fa-exclamation-circle me-2"></i>
+                        <span th:text="${errorMessage}">Error</span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+
+                    <!-- Registration form -->
+                    <form th:action="@{/register}" method="post">
+                        <div class="row">
+                            <!-- Username -->
+                            <div class="col-md-6 mb-3">
+                                <label for="username" class="form-label text-light">
+                                    <i class="fas fa-user me-1"></i>Username *
+                                </label>
+                                <input type="text" class="form-control" id="username"
+                                       name="username" placeholder="Choose a username"
+                                       required minlength="3" maxlength="50"/>
+                            </div>
+                            <!-- Email -->
+                            <div class="col-md-6 mb-3">
+                                <label for="email" class="form-label text-light">
+                                    <i class="fas fa-envelope me-1"></i>Email *
+                                </label>
+                                <input type="email" class="form-control" id="email"
+                                       name="email" placeholder="your@email.com" required/>
+                            </div>
+                        </div>
+
+                        <!-- Full Name -->
+                        <div class="mb-3">
+                            <label for="fullName" class="form-label text-light">
+                                <i class="fas fa-id-card me-1"></i>Full Name *
+                            </label>
+                            <input type="text" class="form-control" id="fullName"
+                                   name="fullName" placeholder="Enter your full name" required/>
+                        </div>
+
+                        <div class="row">
+                            <!-- Password -->
+                            <div class="col-md-6 mb-3">
+                                <label for="password" class="form-label text-light">
+                                    <i class="fas fa-lock me-1"></i>Password *
+                                </label>
+                                <input type="password" class="form-control" id="password"
+                                       name="password" placeholder="Min 6 characters"
+                                       required minlength="6"/>
+                            </div>
+                            <!-- Confirm Password -->
+                            <div class="col-md-6 mb-3">
+                                <label for="confirmPassword" class="form-label text-light">
+                                    <i class="fas fa-lock me-1"></i>Confirm Password *
+                                </label>
+                                <input type="password" class="form-control" id="confirmPassword"
+                                       name="confirmPassword" placeholder="Repeat password" required/>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <!-- Nationality -->
+                            <div class="col-md-6 mb-3">
+                                <label for="nationality" class="form-label text-light">
+                                    <i class="fas fa-flag me-1"></i>Nationality *
+                                </label>
+                                <input type="text" class="form-control" id="nationality"
+                                       name="nationality" placeholder="e.g. Kenya" required/>
+                            </div>
+                            <!-- Phone Number (optional, for M-Pesa) -->
+                            <div class="col-md-6 mb-3">
+                                <label for="phoneNumber" class="form-label text-light">
+                                    <i class="fas fa-phone me-1"></i>Phone (M-Pesa)
+                                </label>
+                                <input type="tel" class="form-control" id="phoneNumber"
+                                       name="phoneNumber" placeholder="254XXXXXXXXX"/>
+                                <small class="text-muted">For M-Pesa payments (optional)</small>
+                            </div>
+                        </div>
+
+                        <!-- Submit button -->
+                        <button type="submit" class="btn btn-primary btn-lg w-100 rounded-pill mt-3 mb-3">
+                            <i class="fas fa-user-plus me-2"></i>Create Account
+                        </button>
+                    </form>
+
+                    <!-- Login link -->
+                    <div class="text-center mt-3">
+                        <p class="text-muted">
+                            Already have an account?
+                            <a th:href="@{/login}" class="text-primary fw-bold">Sign in here</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

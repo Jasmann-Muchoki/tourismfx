@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<!--
+    login.html - User Login Page
+    ==============================
+    Provides username/password authentication form.
+    
+    Spring Security handles the actual authentication:
+      - Form POSTs to /login (loginProcessingUrl in SecurityConfig)
+      - On success: redirects to /dashboard
+      - On failure: redirects back with ?error=true
+    
+    Controller: LoginController.showLoginPage()
+    Model attributes:
+      - errorMessage:   shown after failed login
+      - successMessage: shown after registration or logout
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout :: head"></head>
+<body class="auth-page d-flex align-items-center min-vh-100">
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <!-- Login card with glass effect -->
+            <div class="auth-card card shadow-lg">
+                <div class="card-body p-5">
+                    <!-- Logo and title -->
+                    <div class="text-center mb-4">
+                        <i class="fas fa-globe-americas fa-3x text-primary mb-3"></i>
+                        <h2 class="fw-bold text-white">Welcome Back</h2>
+                        <p class="text-muted">Sign in to your TourismFX account</p>
+                    </div>
+
+                    <!-- Error message (shown after failed login) -->
+                    <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show">
+                        <i class="fas fa-exclamation-circle me-2"></i>
+                        <span th:text="${errorMessage}">Error message</span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+
+                    <!-- Success message (shown after registration/logout) -->
+                    <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show">
+                        <i class="fas fa-check-circle me-2"></i>
+                        <span th:text="${successMessage}">Success message</span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+
+                    <!-- Login form: POSTs to Spring Security's authentication endpoint -->
+                    <form th:action="@{/login}" method="post">
+                        <!-- Username field -->
+                        <div class="mb-3">
+                            <label for="username" class="form-label text-light">
+                                <i class="fas fa-user me-1"></i>Username
+                            </label>
+                            <input type="text" class="form-control form-control-lg"
+                                   id="username" name="username"
+                                   placeholder="Enter your username" required autofocus/>
+                        </div>
+
+                        <!-- Password field -->
+                        <div class="mb-4">
+                            <label for="password" class="form-label text-light">
+                                <i class="fas fa-lock me-1"></i>Password
+                            </label>
+                            <input type="password" class="form-control form-control-lg"
+                                   id="password" name="password"
+                                   placeholder="Enter your password" required/>
+                        </div>
+
+                        <!-- Submit button -->
+                        <button type="submit" class="btn btn-primary btn-lg w-100 rounded-pill mb-3">
+                            <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                        </button>
+                    </form>
+
+                    <!-- Registration link -->
+                    <div class="text-center mt-3">
+                        <p class="text-muted">
+                            Don't have an account?
+                            <a th:href="@{/register}" class="text-primary fw-bold">Register here</a>
+                        </p>
+                        <a th:href="@{/home}" class="text-muted small">
+                            <i class="fas fa-arrow-left me-1"></i>Back to Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

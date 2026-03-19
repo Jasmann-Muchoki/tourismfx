@@ -1,0 +1,568 @@
+/*
+ * styles.css - TourismFX Futuristic Theme Stylesheet
+ * =====================================================
+ * Professional, responsive CSS with a dark futuristic aesthetic.
+ * 
+ * Design principles:
+ *   - Dark background with blue/cyan accent colors
+ *   - Glassmorphism effect for cards (frosted glass look)
+ *   - Smooth animations and transitions
+ *   - Responsive design for mobile, tablet, and desktop
+ *   - Print-friendly receipt layout (@media print)
+ * 
+ * Color palette:
+ *   - Background:    #0a0e27 (deep navy)
+ *   - Card BG:       rgba(255,255,255,0.05) (frosted glass)
+ *   - Primary:       #1a73e8 (blue)
+ *   - Accent:        #00c6ff (cyan)
+ *   - Warning/Price: #ffc107 (gold)
+ *   - Success:       #28a745 (green)
+ *   - Text:          #e0e0e0 (light gray)
+ *   - Muted text:    #8a8a8a (medium gray)
+ */
+
+/* ==================== GLOBAL STYLES ==================== */
+
+/* Base body: dark background, smooth font rendering */
+body {
+    background: #0a0e27;
+    color: #e0e0e0;
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    min-height: 100vh;
+}
+
+/* Headings use Poppins font for a modern look */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
+    font-weight: 600;
+}
+
+/* Links: blue with smooth hover transition */
+a {
+    color: #1a73e8;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #00c6ff;
+}
+
+/* ==================== GLASS NAVBAR ==================== */
+/* Frosted glass navigation bar with blur effect */
+.glass-navbar {
+    background: rgba(10, 14, 39, 0.85) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    padding: 12px 0;
+    transition: all 0.3s ease;
+}
+
+/* Brand text styling */
+.glass-navbar .navbar-brand {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5rem;
+    background: linear-gradient(135deg, #1a73e8, #00c6ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Nav link hover effect */
+.glass-navbar .nav-link {
+    color: rgba(255, 255, 255, 0.8) !important;
+    transition: color 0.3s ease, transform 0.2s ease;
+    padding: 8px 15px;
+    border-radius: 8px;
+}
+
+.glass-navbar .nav-link:hover {
+    color: #00c6ff !important;
+    transform: translateY(-1px);
+}
+
+/* ==================== HERO SECTION ==================== */
+/* Full-viewport hero with animated gradient background */
+.hero-section {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0a0e27 0%, #1a1f4e 30%, #0d47a1 60%, #00c6ff 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle dot pattern overlay for depth */
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 80%, rgba(0, 198, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(26, 115, 232, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+/* Animated gradient keyframes */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ==================== FADE-IN ANIMATIONS ==================== */
+/* Sequential fade-in for hero content elements */
+.animate-fade-in {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.animate-fade-in-delay {
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+.animate-fade-in-delay-2 {
+    animation: fadeInUp 0.8s ease-out 0.4s both;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==================== GLASS CARDS ==================== */
+/* Frosted glass effect for content cards */
+.glass-card {
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 16px !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(0, 198, 255, 0.1);
+}
+
+/* ==================== HOTEL CARDS ==================== */
+/* Card styling for hotel listing items */
+.hotel-card {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 16px !important;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hotel-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(26, 115, 232, 0.2);
+}
+
+/* Hotel card image with gradient overlay */
+.hotel-card-img {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    background-color: #1a1f4e;
+    position: relative;
+}
+
+/* Gradient overlay on hotel images for text readability */
+.hotel-card-img::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60%;
+    background: linear-gradient(transparent, rgba(10, 14, 39, 0.9));
+}
+
+/* Star rating badge overlay on hotel images */
+.star-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 5px 10px;
+    border-radius: 20px;
+    z-index: 1;
+    font-size: 0.85rem;
+}
+
+.hotel-card .card-body {
+    background: transparent;
+}
+
+.hotel-card .card-footer {
+    background: transparent !important;
+    padding: 15px;
+}
+
+/* ==================== FEATURE CARDS ==================== */
+/* Cards used in the "Why Choose TourismFX" section */
+.feature-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.feature-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(26, 115, 232, 0.1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ==================== SECTION TITLES ==================== */
+/* Underlined section title styling */
+.section-title {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 10px;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #1a73e8, #00c6ff);
+    border-radius: 2px;
+}
+
+/* ==================== AUTH PAGES ==================== */
+/* Login and registration page backgrounds */
+.auth-page {
+    background: linear-gradient(135deg, #0a0e27, #1a1f4e);
+    min-height: 100vh;
+}
+
+/* Auth form cards with glass effect */
+.auth-card {
+    background: rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 20px !important;
+}
+
+/* ==================== FORM CONTROLS ==================== */
+/* Dark-themed form inputs */
+.form-control, .form-select {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    color: #e0e0e0 !important;
+    border-radius: 10px;
+    padding: 10px 15px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #1a73e8 !important;
+    box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.2) !important;
+}
+
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Form labels */
+.form-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+/* ==================== BUTTONS ==================== */
+/* Primary button with gradient */
+.btn-primary {
+    background: linear-gradient(135deg, #1a73e8, #0d47a1) !important;
+    border: none !important;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(26, 115, 232, 0.4) !important;
+}
+
+/* Success button (for M-Pesa) */
+.btn-success {
+    background: linear-gradient(135deg, #28a745, #20c997) !important;
+    border: none !important;
+}
+
+.btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4) !important;
+}
+
+/* Rounded pill buttons */
+.rounded-pill {
+    border-radius: 50px !important;
+}
+
+/* ==================== TABLES ==================== */
+/* Dark table styling */
+.table-dark {
+    --bs-table-bg: transparent !important;
+    --bs-table-border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+.table-dark thead th {
+    background: rgba(26, 115, 232, 0.2);
+    border-bottom: 2px solid rgba(26, 115, 232, 0.3);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+}
+
+.table-hover > tbody > tr:hover > * {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* ==================== ALERTS ==================== */
+/* Alert styling for messages */
+.alert {
+    border-radius: 12px;
+    border: none;
+}
+
+.alert-success {
+    background: rgba(40, 167, 69, 0.15);
+    color: #51cf66;
+}
+
+.alert-danger {
+    background: rgba(220, 53, 69, 0.15);
+    color: #ff6b6b;
+}
+
+.alert-warning {
+    background: rgba(255, 193, 7, 0.15);
+    color: #ffc107;
+}
+
+/* ==================== RECEIPT CARD ==================== */
+/* White background card for printable receipt */
+.receipt-card {
+    background: #ffffff !important;
+    color: #333 !important;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.receipt-card .table {
+    color: #333;
+}
+
+.receipt-header {
+    border-bottom: 3px solid #1a73e8;
+    padding-bottom: 20px;
+}
+
+/* ==================== FOOTER ==================== */
+/* Site footer with dark background */
+.site-footer {
+    background: #060918;
+    padding: 40px 0 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.site-footer h5 {
+    color: #e0e0e0;
+    margin-bottom: 15px;
+}
+
+.site-footer a {
+    color: #8a8a8a;
+    transition: color 0.3s ease;
+}
+
+.site-footer a:hover {
+    color: #00c6ff;
+}
+
+/* ==================== BADGES ==================== */
+/* Custom badge sizes */
+.badge {
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    padding: 5px 12px;
+}
+
+/* ==================== PROFILE AVATAR ==================== */
+.profile-avatar {
+    display: inline-block;
+    padding: 20px;
+    border-radius: 50%;
+    background: rgba(26, 115, 232, 0.1);
+    border: 2px solid rgba(26, 115, 232, 0.3);
+}
+
+/* ==================== SCROLLBAR ==================== */
+/* Custom scrollbar for WebKit browsers */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0a0e27;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(26, 115, 232, 0.3);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(26, 115, 232, 0.5);
+}
+
+/* ==================== RESPONSIVE ADJUSTMENTS ==================== */
+
+/* Tablets and smaller (< 768px) */
+@media (max-width: 767.98px) {
+    .hero-section {
+        min-height: 80vh;
+        padding: 60px 0;
+    }
+
+    .hero-section h1 {
+        font-size: 2rem;
+    }
+
+    .hero-section .lead {
+        font-size: 1rem;
+    }
+
+    .hero-section .btn-lg {
+        padding: 10px 25px;
+        font-size: 0.9rem;
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    /* Stack buttons vertically on mobile */
+    .hero-section .btn-lg + .btn-lg {
+        margin-left: 0 !important;
+    }
+
+    /* Smaller hotel card images on mobile */
+    .hotel-card-img {
+        height: 160px;
+    }
+
+    /* Full-width tables on mobile */
+    .table-responsive {
+        font-size: 0.85rem;
+    }
+
+    /* Adjust card padding on mobile */
+    .card-body {
+        padding: 15px;
+    }
+}
+
+/* Small phones (< 576px) */
+@media (max-width: 575.98px) {
+    .hero-section h1 {
+        font-size: 1.6rem;
+    }
+
+    .hero-section .fs-5 {
+        font-size: 0.95rem !important;
+    }
+
+    .glass-navbar .navbar-brand {
+        font-size: 1.2rem;
+    }
+}
+
+/* ==================== PRINT STYLES ==================== */
+/* Optimized layout for printing receipts */
+@media print {
+    /* Hide non-essential elements when printing */
+    .no-print,
+    .glass-navbar,
+    .site-footer,
+    .btn,
+    .navbar,
+    footer,
+    nav {
+        display: none !important;
+    }
+
+    /* White background for print */
+    body {
+        background: white !important;
+        color: #333 !important;
+        font-size: 12pt;
+    }
+
+    main {
+        padding-top: 0 !important;
+    }
+
+    /* Remove card shadows and borders for clean print */
+    .receipt-card {
+        box-shadow: none !important;
+        border: 1px solid #ddd !important;
+    }
+
+    /* Ensure table borders print properly */
+    .table {
+        border-collapse: collapse;
+    }
+
+    .table td, .table th {
+        border: 1px solid #ddd !important;
+        padding: 8px;
+    }
+
+    /* Remove colored backgrounds in print */
+    .badge {
+        border: 1px solid #333;
+        background: white !important;
+        color: #333 !important;
+    }
+
+    /* Fit receipt to page width */
+    .container {
+        max-width: 100% !important;
+        padding: 0 !important;
+    }
+
+    /* Page break control */
+    .receipt-card {
+        page-break-inside: avoid;
+    }
+}

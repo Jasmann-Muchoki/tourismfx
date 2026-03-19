@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<!--
+    home.html - Landing Page / Home Page
+    ======================================
+    The main entry point for the TourismFX application.
+    
+    Features:
+      - Hero section with animated background and CTA buttons
+      - Featured hotels carousel/grid
+      - Key features showcase (booking, payments, receipts)
+      - Responsive design with Bootstrap 5 grid
+    
+    Controller: HotelListController.showHomePage()
+    Model attributes:
+      - hotels: List<Hotel> - featured hotels to display
+-->
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="fragments/layout :: head"></head>
+<body class="d-flex flex-column min-vh-100">
+
+<!-- Navigation bar -->
+<div th:replace="fragments/layout :: navbar"></div>
+
+<!-- ==================== HERO SECTION ==================== -->
+<!-- Full-width hero with gradient background and call-to-action -->
+<section class="hero-section d-flex align-items-center">
+    <div class="container text-center text-white">
+        <h1 class="display-3 fw-bold mb-3 animate-fade-in">
+            <i class="fas fa-globe-americas me-3"></i>TourismFX
+        </h1>
+        <p class="lead mb-4 animate-fade-in-delay">
+            Your Premier Tourism Docket Management System
+        </p>
+        <p class="mb-5 fs-5 animate-fade-in-delay-2">
+            Discover amazing destinations, book luxury hotels, and pay securely with PayPal or M-Pesa
+        </p>
+        <div class="animate-fade-in-delay-2">
+            <a th:href="@{/hotels}" class="btn btn-light btn-lg me-3 px-5 rounded-pill shadow">
+                <i class="fas fa-search me-2"></i>Explore Hotels
+            </a>
+            <a th:href="@{/register}" class="btn btn-outline-light btn-lg px-5 rounded-pill"
+               sec:authorize="isAnonymous()">
+                <i class="fas fa-user-plus me-2"></i>Get Started
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== FEATURES SECTION ==================== -->
+<!-- Showcases the key features of the platform -->
+<section class="py-5 bg-dark">
+    <div class="container">
+        <h2 class="text-center text-white mb-5">
+            <span class="section-title">Why Choose TourismFX?</span>
+        </h2>
+        <div class="row g-4">
+            <!-- Feature 1: Easy Booking -->
+            <div class="col-md-4">
+                <div class="feature-card text-center p-4">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-calendar-check fa-3x text-primary"></i>
+                    </div>
+                    <h4 class="text-white">Easy Booking</h4>
+                    <p class="text-muted">Browse hotels, select rooms, and book in just a few clicks.
+                        Intuitive interface designed for seamless reservations.</p>
+                </div>
+            </div>
+            <!-- Feature 2: Secure Payments -->
+            <div class="col-md-4">
+                <div class="feature-card text-center p-4">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-shield-alt fa-3x text-success"></i>
+                    </div>
+                    <h4 class="text-white">Secure Payments</h4>
+                    <p class="text-muted">Pay with PayPal or M-Pesa. All transactions are encrypted
+                        and processed through trusted payment gateways.</p>
+                </div>
+            </div>
+            <!-- Feature 3: Instant Receipts -->
+            <div class="col-md-4">
+                <div class="feature-card text-center p-4">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-file-pdf fa-3x text-danger"></i>
+                    </div>
+                    <h4 class="text-white">Instant Receipts</h4>
+                    <p class="text-muted">Get PDF receipts via email instantly. Print or download
+                        your booking confirmations anytime from your dashboard.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== FEATURED HOTELS SECTION ==================== -->
+<!-- Grid display of available hotels with booking links -->
+<section class="py-5" style="background: #0a0e27;">
+    <div class="container">
+        <h2 class="text-center text-white mb-5">
+            <span class="section-title">Featured Hotels</span>
+        </h2>
+
+        <!-- Show message if no hotels available -->
+        <div th:if="${#lists.isEmpty(hotels)}" class="text-center text-muted py-5">
+            <i class="fas fa-hotel fa-4x mb-3"></i>
+            <h4>No hotels available yet</h4>
+            <p>Check back soon for amazing destinations!</p>
+        </div>
+
+        <!-- Hotel cards grid -->
+        <div class="row g-4" th:if="${!#lists.isEmpty(hotels)}">
+            <div class="col-lg-4 col-md-6" th:each="hotel : ${hotels}">
+                <div class="hotel-card card h-100">
+                    <!-- Hotel image with star rating overlay -->
+                    <div class="card-img-top hotel-card-img"
+                         th:style="'background-image: url(' + (${hotel.imageUrl} ?: '/images/hotel-default.jpg') + ')'">
+                        <div class="star-badge">
+                            <span th:each="i : ${#numbers.sequence(1, hotel.starRating)}">
+                                <i class="fas fa-star text-warning"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title text-white" th:text="${hotel.name}">Hotel Name</h5>
+                        <p class="text-muted mb-2">
+                            <i class="fas fa-map-marker-alt me-1 text-primary"></i>
+                            <span th:text="${hotel.location}">Location</span>
+                        </p>
+                        <p class="card-text text-muted small"
+                           th:text="${#strings.abbreviate(hotel.description, 120)}">
+                            Hotel description goes here...
+                        </p>
+                    </div>
+                    <div class="card-footer border-0">
+                        <a th:href="@{/hotels/{id}(id=${hotel.id})}"
+                           class="btn btn-primary w-100 rounded-pill">
+                            <i class="fas fa-eye me-1"></i>View Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View all hotels link -->
+        <div class="text-center mt-5" th:if="${!#lists.isEmpty(hotels)}">
+            <a th:href="@{/hotels}" class="btn btn-outline-light btn-lg rounded-pill px-5">
+                <i class="fas fa-th-list me-2"></i>View All Hotels
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<div th:replace="fragments/layout :: footer"></div>
+
+<!-- Bootstrap 5 JavaScript bundle (includes Popper.js for dropdowns) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
